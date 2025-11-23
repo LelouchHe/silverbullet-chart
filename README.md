@@ -48,19 +48,26 @@ ${chart {
 ## Implementation
 
 ```space-lua
-
 local chartjs = js.import("/.fs/Library/LelouchHe/silverbullet-chart.js")
 
 function chart(config)
   local canvas = dom.canvas {
     id = "chart-" .. os.time() .. "-" .. math.random()
   }
+
+  local count = 0
   local rendered = false
 
-  local function timeout()
+  local function tryToRender()
+    if count >= 10 then
+      return
+    end
+
+    count = count + 1
+    
     local target = js.window.document.getElementById(canvas.id)
     if not target then
-      js.window.setTimeout(timeout, 100)
+      js.window.setTimeout(tryToRender, 100)
       return
     end
 
@@ -72,9 +79,7 @@ function chart(config)
     js.new(chartjs.Chart, target, config)
   end
 
-  js.window.setTimeout(timeout, 100)
+  js.window.setTimeout(tryToRender, 100)
   return widget.html(canvas)
 end
-
-
 ```
