@@ -4,7 +4,6 @@ tags: meta/library
 files:
   - Silverbullet-Chart/chart.js
 ---
-
 # Silverbullet Chart
 
 ## Implementation
