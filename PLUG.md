@@ -4,5 +4,5 @@ tags: meta/library
 files:
   - silverbullet-chart.js
 ---
-changequote({{,}})dnl
-include({{README.md}})
+changequote({{{,}}})dnl
+include({{{README.md}}})
