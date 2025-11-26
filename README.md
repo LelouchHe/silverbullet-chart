@@ -2,6 +2,7 @@
 
 This library is a wrapper of [Chart.js](https://www.chartjs.org/) (version 4.5.1) and some of its plugins:
 
+* [Default color palette](https://www.chartjs.org/docs/latest/general/colors.html#default-color-palette)
 * [chartjs-plugin-annotation](https://www.chartjs.org/chartjs-plugin-annotation/latest/): version 3.1.0
 
 It provides one widget `chart`, which can be used to render chart, of course.
