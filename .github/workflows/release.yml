@@ -40,5 +40,5 @@ jobs:
           draft: false
           files: |
             PLUG.md
-            silverbullet-chart.js
+            silverbullet-chart.mjs
             

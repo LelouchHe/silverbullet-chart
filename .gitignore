@@ -1,1 +1,7 @@
+silverbullet-chart.mjs
 silverbullet-chart.js
+silverbullet-chart-*.js
+node_modules/
+package.json
+package-lock.json
+bundle-fix.ts

@@ -48,7 +48,7 @@ ${chart {
 ## Implementation
 
 ```space-lua
-local chartjs = js.import("/.fs/Library/LelouchHe/silverbullet-chart.js")
+local chartjs = js.import("/.fs/Library/LelouchHe/silverbullet-chart.mjs")
 
 function chart(config)
   local canvas = dom.canvas {

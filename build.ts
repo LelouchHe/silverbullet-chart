@@ -5,7 +5,7 @@ await esbuild.build({
   entryPoints: ["bundle.ts"],
   bundle: true,
   format: "esm",
-  outfile: "silverbullet-chart.js",
+  outfile: "silverbullet-chart.mjs",
   sourcemap: false,
   minify: true,
   plugins: [...denoPlugins()],

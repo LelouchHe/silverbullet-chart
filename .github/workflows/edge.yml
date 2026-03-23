@@ -49,4 +49,4 @@ jobs:
           body: Automated build from commit ${{ github.sha }}
           files: |
             PLUG.md
-            silverbullet-chart.js
+            silverbullet-chart.mjs
