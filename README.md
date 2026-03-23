@@ -45,6 +45,10 @@ ${chart {
     }
 }}
 
+## Note on `.mjs` Extension
+
+The bundle uses `.mjs` instead of `.js` because mobile Safari enforces strict MIME type checking for ES modules loaded via `import()`. With a `.js` extension, the SilverBullet Service Worker may serve the file with incorrect headers, causing `import()` to silently return an empty module namespace on mobile Safari. Desktop browsers are more lenient and work with either extension. Using `.mjs` ensures correct ES module handling on all platforms.
+
 ## Implementation
 
 ```space-lua
