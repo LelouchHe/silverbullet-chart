@@ -55,35 +55,32 @@ The bundle uses `.mjs` instead of `.js` because mobile Safari enforces strict MI
 local chartjs = js.import("/.fs/Library/LelouchHe/silverbullet-chart.mjs")
 
 function chart(config)
-  local canvas = dom.canvas {
-    id = "chart-" .. os.time() .. "-" .. math.random()
-  }
-
-  local count = 0
-  local rendered = false
-
-  local function tryToRender()
-    if count >= 10 then
-      return
-    end
-
-    count = count + 1
-    
-    local target = js.window.document.getElementById(canvas.id)
-    if not target then
-      js.window.setTimeout(tryToRender, 100)
-      return
-    end
-
-    if rendered then
-      return
-    end
-
-    rendered = true
-    js.new(chartjs.Chart, target, config)
-  end
-
-  js.window.setTimeout(tryToRender, 100)
-  return widget.html(canvas)
+  local canvas = dom.canvas {}
+  js.new(chartjs.Chart, canvas, config)
+  return widget.html(dom.div {
+    style = "position:relative;display:block;width:100%;",
+    canvas,
+  })
 end
 ```
+
+## Why render synchronously
+
+Earlier versions created the canvas, waited for it to show up in the document with a
+`setTimeout` + `getElementById` poll, and only then constructed the chart. That works while a
+widget is mounted exactly once, but SilverBullet 3.0 re-renders widgets and virtualizes long
+pages, so the poll frequently missed (or found a stale node) and the chart disappeared —
+it rendered, then vanished after scrolling away and back.
+
+Chart.js does not need the canvas to be in the document for the first draw: it paints into the
+canvas bitmap, and its hover/tooltip listeners live on the canvas element itself, so they work
+once the element is inserted. Rendering synchronously into a detached canvas therefore survives
+any number of re-mounts, since every mount builds and paints a fresh chart.
+
+The wrapper `div` is required rather than cosmetic: SilverBullet renders widgets inline, an
+inline container reports `clientWidth` 0, and Chart.js then sizes the chart to 0×0. A block
+wrapper with `width: 100%` gives it a measurable width.
+
+Known limitation, unchanged from earlier versions: the chart does not follow window resizing
+(2.x did not either). Size comes from Chart.js's default `aspectRatio` of 2:1; set
+`options.aspectRatio` per chart to change it.
